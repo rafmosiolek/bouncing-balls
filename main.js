@@ -163,6 +163,11 @@ EvilCircle.prototype.collisionDetect = function() {
 // array stores all created balls
 var balls = [];
 
+// new evil circle object instance
+var evilBall = new EvilCircle();
+// setControls method called
+evilBall.setControls();
+
 // an animation loop
 function loop() {
     // 0.4 value leaves the trail behind the ball
@@ -176,11 +181,17 @@ function loop() {
     }
 
     for (var i = 0; i < balls.length; i++) {
-        balls[i].draw();
-        balls[i].update();
-        balls[i].collisionDetect();
+        // loop through every ball and call the methods functions for each one only if the current ball exists
+        if (balls[i].exist === true) {
+            balls[i].draw();
+            balls[i].update();
+            balls[i].collisionDetect();
+        }
+        // call evil ball instance methods on every iteration of the loop
+        evilBall.draw();
+        evilBall.checkBounds();
+        evilBall.collisionDetect();
     }
-
     requestAnimationFrame(loop);
 }
 
