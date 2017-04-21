@@ -52,13 +52,31 @@ Ball.prototype.update = function() {
     this.y += this.velY;
 };
 
+// collision detection
+Ball.prototype.collisionDetect = function() {
+    for (var j = 0; j < balls.length; j++) {
+        // checks if current ball being looped through is NOT the same ball
+        if (!(this === balls[j])) {
+            // algorithm checks the collision of two circles (2d collision detection)
+            var dx = this.x - balls[j].x;
+            var dy = this.y - balls[j].y;
+
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            // if collision is detected, balls are changing colours
+            if (distance < this.size + balls[j].size) {
+                balls[j].color = this.color = "rgb(" + random(0, 255) + "," + random(0, 255) + "," + random(0, 255) + ")";
+            }
+        }
+    }
+};
+
 // array stores all created balls
 var balls = [];
 
 // an animation loop
 function loop() {
     // 0.4 value leaves the trail behind the ball
-    ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+    ctx.fillStyle = "rgba(44, 62, 80, 0.4)";
     ctx.fillRect(0, 0, width, height);
 
     // setting up a maximum numbers of balls on the screen
@@ -70,12 +88,16 @@ function loop() {
     for (var i = 0; i < balls.length; i++) {
         balls[i].draw();
         balls[i].update();
+        balls[i].collisionDetect();
     }
 
     requestAnimationFrame(loop);
 }
 
+// function is called, animation started
 loop();
+
+
 
 
 
