@@ -1,5 +1,11 @@
-// setup canvas
+/* GLOBAL VARIABLES */
 
+// score counter:
+var para = document.querySelector("p");
+para.textContent = "Your score: 0";
+var count = 0;
+
+// setup canvas
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -155,6 +161,9 @@ EvilCircle.prototype.collisionDetect = function() {
 
             if (distance < this.size + balls[j].size) {
                 balls[j].exist = false;
+                // points counter updated if evilBall eats the ball
+                count ++;
+                para.textContent = "Your score: " + count;
             }
         }
     }
